@@ -1,10 +1,10 @@
 {
   "fill" : {
-    "automatic-gradient" : "display-p3:0.19608,0.57255,0.97255,1.00000"
+    "automatic-gradient" : "display-p3:0.97255,0.49626,0.33914,1.00000"
   },
   "groups" : [
     {
-      "blur-material" : 0.08,
+      "blur-material" : 0.15,
       "layers" : [
         {
           "fill" : {
@@ -23,13 +23,27 @@
       ],
       "lighting" : "individual",
       "opacity" : 1,
-      "position" : {
-        "scale" : 0.59,
-        "translation-in-points" : [
-          -103,
-          0
-        ]
-      },
+      "position-specializations" : [
+        {
+          "value" : {
+            "scale" : 0.59,
+            "translation-in-points" : [
+              -103,
+              0
+            ]
+          }
+        },
+        {
+          "idiom" : "square",
+          "value" : {
+            "scale" : 0.56,
+            "translation-in-points" : [
+              -103,
+              0
+            ]
+          }
+        }
+      ],
       "shadow" : {
         "kind" : "neutral",
         "opacity" : 0.5
@@ -60,13 +74,27 @@
       ],
       "lighting" : "individual",
       "opacity" : 0.6,
-      "position" : {
-        "scale" : 0.59,
-        "translation-in-points" : [
-          -103,
-          0
-        ]
-      },
+      "position-specializations" : [
+        {
+          "value" : {
+            "scale" : 0.59,
+            "translation-in-points" : [
+              -103,
+              0
+            ]
+          }
+        },
+        {
+          "idiom" : "square",
+          "value" : {
+            "scale" : 0.56,
+            "translation-in-points" : [
+              -103,
+              0
+            ]
+          }
+        }
+      ],
       "shadow" : {
         "kind" : "neutral",
         "opacity" : 0.5

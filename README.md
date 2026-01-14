@@ -1,103 +1,63 @@
 <div align="center">
-  <img width="200" height="200" src="/assets/icon.png" alt="UniversalGlass Logo">
+  <img width="128" height="128" src="/Resources/icon.png" alt="UniversalGlass Icon">
   <h1><b>UniversalGlass</b></h1>
   <p>
-    Bring SwiftUI’s iOS 26 glass APIs to earlier deployments with lightweight shims—keep your UI consistent on iOS 18+, yet automatically defer to the real implementations wherever they exist.
-    <br>
+    Bring SwiftUI's iOS 26 glass APIs to earlier deployments with lightweight shims—keep your UI consistent on iOS 17+, yet automatically defer to the real implementations wherever they exist.
   </p>
 </div>
 
 <p align="center">
-  <a href="https://developer.apple.com/ios/"><img src="https://badgen.net/badge/iOS/17+/blue" alt="iOS 17+"></a>
-  <a href="https://developer.apple.com/visionOS/"><img src="https://badgen.net/badge/visionOS/1+/blue" alt="visionOS 1+"></a>
-  <a href="https://www.apple.com/macos/"><img src="https://badgen.net/badge/macOS/13+/blue" alt="macOS 13+"></a>
-  <a href="https://developer.apple.com/tvos/"><img src="https://badgen.net/badge/tvOS/17+/blue" alt="tvOS 17+"></a>
-  <a href="https://developer.apple.com/watchos/"><img src="https://badgen.net/badge/watchOS/10+/blue" alt="watchOS 10+"></a>
-  <a href="https://swift.org/"><img src="https://badgen.net/badge/Swift/6.2/orange" alt="Swift 6.2"></a>
-  <a href="https://developer.apple.com/xcode/"><img src="https://badgen.net/badge/Xcode/16+/blue" alt="Xcode 16"></a>
+  <a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-6.0+-F05138?logo=swift&logoColor=white" alt="Swift 6.0+"></a>
+  <a href="https://developer.apple.com"><img src="https://img.shields.io/badge/iOS-17+-000000?logo=apple" alt="iOS 17+"></a>
+  <a href="https://developer.apple.com"><img src="https://img.shields.io/badge/macOS-13+-000000?logo=apple" alt="macOS 13+"></a>
+  <a href="https://developer.apple.com"><img src="https://img.shields.io/badge/tvOS-17+-000000?logo=apple" alt="tvOS 17+"></a>
+  <a href="https://developer.apple.com"><img src="https://img.shields.io/badge/watchOS-10+-000000?logo=apple" alt="watchOS 10+"></a>
+  <a href="https://developer.apple.com"><img src="https://img.shields.io/badge/visionOS-1+-000000?logo=apple" alt="visionOS 1+"></a>
 </p>
-        
----
 
-## Why UniversalGlass?
+<div align="center">
+  <img width="600" src="https://github.com/user-attachments/assets/f66f2c6d-7f51-441c-9022-fcd0280abb5a" alt="Preview">
+</div>
 
-OS 26 introduces new SwiftUI glass APIs, but these only ship on the latest platforms. UniversalGlass **isn't** a pixel-perfect recreation; it offers compatibility layers and API conveniences so your code paths stay unified on older systems, then quietly defers to Apple’s implementation on platforms that ship it.
 
-![Demo](https://github.com/user-attachments/assets/f66f2c6d-7f51-441c-9022-fcd0280abb5a)
+## Overview
 
----
+OS 26 introduces new SwiftUI glass APIs, but these only ship on the latest platforms. UniversalGlass offers compatibility layers so your code stays unified on older systems, then quietly defers to Apple's implementation where available.
 
-## Highlights
+- **Glass for every surface** – Apply `universalGlassEffect` to any view with tinting and interactivity
+- **Native-feeling buttons** – `.universalGlass()` and `.universalGlassProminent()` button styles
+- **Containers & morphing** – `UniversalGlassEffectContainer` with union/ID helpers for glass grouping
+- **Backports** – Optional `UniversalGlassBackports` target for `.glass` and `.glassEffect` syntax
 
-- **Glass for every surface** – Apply `universalGlassEffect` to any view, shape, or custom `UniversalGlass` configuration. Liquid accents, tinting, and interactivity
-- **Buttons that feel native** – `.universalGlass()` and `.universalGlassProminent()` mirror the future SwiftUI button styles, including a custom material fallback that respects tint, control size, and press animations
-- **Containers & morphing** – Drop content into `UniversalGlassEffectContainer` and use union/ID helpers to bridge to SwiftUI’s morphing APIs
-- **Backports when you want them** – Import the optional `UniversalGlassBackports` target to get `.glass`, `.glassProminent`, and `.glassEffect`. They’re convenience shims that forward to the true SwiftUI APIs on iOS 26.
-- **Modular design** – Glass effects, button styles, transitions, and previews live in focused files
-
----
-
-## Known Issues
-
-- On pre-OS 26 systems the fallback `UniversalGlassEffectContainer` ignores the public `spacing` parameter; a fix is planned.
-
----
 
 ## Installation
 
-Add UniversalGlass to your Package.swift dependencies:
-
 ```swift
-.package(url: "https://github.com/Aeastr/UniversalGlass.git", branch: "main")
+dependencies: [
+    .package(url: "https://github.com/Aeastr/UniversalGlass.git", branch: "main")
+]
 ```
 
-Then add the target to any product that needs it:
-
 ```swift
-    dependencies: [
-        .product(name: "UniversalGlass", package: "UniversalGlass")
-    ]
+import UniversalGlass
 ```
 
-Need the optional shorthand APIs (`.glass`, `.glassEffect`, etc.)? Add the backport module too:
+| Target | Description |
+|--------|-------------|
+| `UniversalGlass` | Main module with glass effects, button styles, and containers |
+| `UniversalGlassBackports` | Optional shorthand APIs (`.glass`, `.glassEffect`, etc.) |
 
-```swift
-    dependencies: [
-        .product(name: "UniversalGlass", package: "UniversalGlass"),
-        .product(name: "UniversalGlassBackports", package: "UniversalGlass")
-    ]
-```
-
----
 
 ## Usage
 
 ### Glass Effects
 
 ```swift
-import UniversalGlass
-// import UniversalGlassBackports if you prefer the native names
-
-struct Card: View {
-    var body: some View {
-        Text("Cosmic Glass")
-            .font(.headline)
-            .padding(.horizontal, 36)
-            .padding(.vertical, 18)
-            .universalGlassEffect(.regular.tint(.purple))
-            .padding()
-            .background(
-                LinearGradient(
-                    colors: [.black, .purple.opacity(0.6)],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-            )
-    }
-}
+Text("Hello")
+    .universalGlassEffect(.regular.tint(.purple))
 ```
 
-Need a custom shape?
+With a custom shape:
 
 ```swift
 Circle()
@@ -105,120 +65,127 @@ Circle()
     .universalGlassEffect(in: Circle())
 ```
 
-Preset helpers roughly match Apple’s tiers:
+See [Effects](docs/Effects.md) for configurations, fallback customization, and transitions.
 
-- `.ultraThin` → clear glass
-- `.thin` → clear glass with a light tint from the system background
-- `.regular` → regular liquid glass
-- `.thick` → regular glass with a stronger background tint
-- `.ultraThick` → regular glass with a deep background tint
-
-### Glass Button Styles
+### Button Styles
 
 ```swift
-Button("Join Beta") {
-    // action
-}
-.tint(.pink)
-.controlSize(.large)
-.buttonStyle(
-    .universalGlassProminent()
-)
+Button("Join Beta") { }
+    .buttonStyle(.universalGlassProminent())
+    .tint(.pink)
 ```
 
-Legacy fallbacks apply a capsule material with tint-aware highlights, drop shadow, and press animations
+See [Button Styles](docs/ButtonStyles.md) for routing behaviour and material fallback details.
 
-### Effect Containers & Morphing
+### Effect Containers
 
 ```swift
-@Namespace private var glassNamespace
+@Namespace private var ns
 
-UniversalGlassEffectContainer(spacing: 24) {
-    HStack(spacing: 16) {
+UniversalGlassEffectContainer {
+    HStack {
         AvatarView()
             .universalGlassEffect()
-            .universalGlassEffectUnion(id: "profile", namespace: glassNamespace)
+            .universalGlassEffectUnion(id: "profile", namespace: ns)
 
         DetailsView()
             .universalGlassEffect()
-            .universalGlassEffectTransition(.matchedGeometry)
+            .universalGlassEffectUnion(id: "profile", namespace: ns)
     }
 }
 ```
 
-When a runtime supports `GlassEffectContainer` or `glassEffectTransition`, UniversalGlass forwards automatically; otherwise it falls back to material and blur transitions.
+See [Containers](docs/Containers.md) for grouping behaviour and [Container Internals](docs/ContainerInternals.md) for the fallback pipeline.
 
-### Transitions
-
-```swift
-@State private var showSettings = false
-
-VStack {
-    if showSettings {
-        SettingsPanel()
-            .transition(.blur)
-    }
-
-    Toggle("Show Settings", isOn: $showSettings)
-        .universalGlassButtonStyle()
-}
-.animation(.easeInOut(duration: 0.3), value: showSettings)
-```
-
-Need a custom feel? Use `AnyTransition.blur(intensity:scale:)` and apply the timing via
-`.animation` on the parent view. When you explicitly need the back-port animation used
-under the hood, reach for `.fallbackBlur`:
-
-```swift
-// Force the same animation UniversalGlass uses on older platforms.
-SettingsPanel()
-    .transition(.fallbackBlur)
-
-// Dial in a custom blend while still supplying your own animation.
-SettingsPanel()
-    .transition(.blur(intensity: 8, scale: 0.85))
-    .animation(.spring(response: 0.5, dampingFraction: 0.8), value: showSettings)
-```
-
-### Opt-in Backports
+### Backports
 
 ```swift
 import UniversalGlassBackports
 
 Button("RSVP") {}
     .buttonStyle(.glassProminent)
-
-CardView()
-    .glassEffect(.regular.tint(.mint))
 ```
 
-SwiftUI’s real implementations automatically replace these extensions when available.
+See [Backports](docs/Backports.md) for the full API surface.
 
----
+
+## Customization
+
+### Tinting and Interactivity
+
+```swift
+.universalGlassEffect(.regular.tint(.cyan))
+.universalGlassEffect(.regular.interactive())
+```
+
+### Fallback Materials
+
+Override what renders on older OS versions:
+
+```swift
+.universalGlassEffect(.regular.fallback(material: .thin))
+.universalGlassEffect(.thick.fallback(material: .regular, tint: .blue.opacity(0.2)))
+```
+
+### Shadows
+
+```swift
+.universalGlassEffect(.regular.shadow(UniversalGlassShadow(color: .red, radius: 12)))
+.universalGlassEffect(.regular.shadow(.none))
+```
+
+### Global Rendering Mode
+
+Force all effects in a hierarchy to use a specific renderer:
+
+```swift
+MyApp()
+    .universalGlassRenderingMode(.material)  // Force fallback
+```
+
+### Chaining
+
+All modifiers chain:
+
+```swift
+.universalGlassEffect(
+    .ultraThick
+        .fallback(material: .thin, tint: .cyan.opacity(0.3))
+        .shadow(UniversalGlassShadow(color: .blue, radius: 16))
+        .tint(.purple)
+        .interactive()
+)
+```
+
+See [Effects](docs/Effects.md) for the full configuration API.
+
+
+## How It Works
+
+UniversalGlass uses runtime availability checks to route calls to native SwiftUI APIs on OS 26+ or fall back to material-based approximations on earlier systems. The fallback renderer:
+
+- Registers effects as participants via anchor preferences
+- Groups views by union keys or effect IDs
+- Draws composite material overlays that respect shapes and transitions
+
+For technical deep dives, see the [docs](docs/):
+- [Effects](docs/Effects.md) – Runtime routing and fallback rendering
+- [Button Styles](docs/ButtonStyles.md) – Primitive style architecture
+- [Containers](docs/Containers.md) – Union grouping logic
+- [Container Internals](docs/ContainerInternals.md) – Full fallback pipeline
+
+**Known limitation:** On pre-OS 26 systems, the fallback container ignores the `spacing` parameter.
+
 
 ## Contributing
 
-Contributions are welcome—bug reports, feature proposals, docs, or polish. Before submitting a PR, please:
+Contributions welcome. Before submitting a PR:
 
-1. Create an issue outlining the change (optional for small fixes).
-2. Follow the existing Swift formatting and file organisation.
-3. Ensure `swift build` succeeds and add previews/tests where relevant.
+1. Create an issue outlining the change (optional for small fixes)
+2. Follow the existing Swift formatting and file organisation
+3. Ensure `swift build` succeeds and add previews/tests where relevant
 
----
 
-## Support
+## License
 
-If UniversalGlass helps your project, consider starring the repo or sharing it with your team. Feedback, ideas, and issues are all appreciated!
-
----
-
-## Where to find me  
-- here, obviously.  
-- [Twitter](https://x.com/AetherAurelia)  
-- [Threads](https://www.threads.net/@aetheraurelia)  
-- [Bluesky](https://bsky.app/profile/aethers.world)  
-- [LinkedIn](https://www.linkedin.com/in/willjones24)
-
----
-
-<p align="center">Built with 🍏💦🔍 by Aether</p>
+MIT. See [LICENSE](LICENSE) for details.
