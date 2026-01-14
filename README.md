@@ -1,5 +1,5 @@
 <div align="center">
-  <img width="128" height="128" src="/Resources/icon.png" alt="UniversalGlass Icon">
+  <img width="128" height="128" src="/resources/icon.png" alt="UniversalGlass Icon">
   <h1><b>UniversalGlass</b></h1>
   <p>
     Bring SwiftUI's iOS 26 glass APIs to earlier deployments with lightweight shims—keep your UI consistent on iOS 17+, yet automatically defer to the real implementations wherever they exist.
